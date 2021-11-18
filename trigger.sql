@@ -216,7 +216,7 @@ BEGIN
         EXEC (@sql)
     END
 END
-SET NOCOUNT OFF:
+SET NOCOUNT OFF;
 GO 
 -- #endregion 
 
