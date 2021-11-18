@@ -44,7 +44,9 @@ GO
 table you want to monitor*/
 
 -- #region | trigger with bug fix
-CREATE OR ALTER TRIGGER tr_audit_trigtest ON dbo.trigtest 
+DROP TRIGGER IF EXISTS dbo.tr_audit_trigtest;
+GO
+CREATE TRIGGER tr_audit_trigtest ON dbo.trigtest 
     FOR  
         /*uncomment INSERT if you want. The insert data is on the source table
             but sometimes your end users wanna see ALL the data in the audit table
@@ -54,7 +56,7 @@ CREATE OR ALTER TRIGGER tr_audit_trigtest ON dbo.trigtest
         UPDATE, 
         DELETE 
 AS
-
+SET NOCOUNT ON;
 /*declare all the variables*/
 DECLARE @bit INT;
 DECLARE @field INT;
@@ -214,6 +216,7 @@ BEGIN
         EXEC (@sql)
     END
 END
+SET NOCOUNT OFF:
 GO 
 -- #endregion 
 
