@@ -12,14 +12,15 @@
 There will only need to be one of these in a database*/
 DROP TABLE IF EXISTS dbo.audit_trigger; 
 CREATE TABLE dbo.audit_trigger (
-    Type CHAR(1),
-    TableName VARCHAR(128),
+    audit_trigger_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, 
+    audit_type CHAR(1),
+    table_name VARCHAR(128),
     PK VARCHAR(1000),
-    FieldName VARCHAR(128),
-    OldValue VARCHAR(1000),
-    NewValue VARCHAR(1000),
-    UpdateDate datetime,
-    UserName VARCHAR(128)
+    field_name VARCHAR(128),
+    old_value VARCHAR(1000),
+    new_value VARCHAR(1000),
+    update_date datetime,
+    audit_user_name VARCHAR(128)
 );
 GO
 /*now we will illustrate the use of this tool
@@ -185,14 +186,14 @@ BEGIN
         );
         SET @sql = ('
             INSERT INTO audit_trigger (    
-                Type, 
-                TableName, 
+                audit_type, 
+                table_name, 
                 PK, 
-                FieldName, 
-                OldValue, 
-                NewValue, 
-                UpdateDate, 
-                UserName
+                field_name, 
+                old_value, 
+                new_value, 
+                update_date, 
+                audit_user_name
             )
             SELECT ''' 
                 + @Type + ''',''' 
